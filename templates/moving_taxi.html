@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>택시 위치 시뮬레이션</title>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94d465c2a68e6555a578689e25d37871&libraries=services,geometry"></script>
+  <style>
+    #map {
+      width: 100%;
+      height: 90vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    // 카카오맵 초기화
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+      center: new kakao.maps.LatLng(37.396706, 126.9226935),
+      level: 4
+    };
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+
+    // API에서 택시 위치 데이터를 가져오기
+    fetch('/taxi/api/taxi-location-json/')
+      .then(response => response.json())
+      .then(data => {
+        const seenPairs = new Set();
+
+        data.forEach(location => {
+          const startKey = `${location.s_lat},${location.s_long}`;
+          const endKey = `${location.d_lat},${location.d_long}`;
+          const routeKey = startKey + '-' + endKey;
+          const reverseRouteKey = endKey + '-' + startKey;
+
+          // 동일 경로 쌍이 이미 처리된 경우 중복 생성 방지
+          if (seenPairs.has(routeKey) || seenPairs.has(reverseRouteKey)) {
+            return;
+          }
+
+          // 경로 쌍을 기록
+          seenPairs.add(routeKey);
+          seenPairs.add(reverseRouteKey);
+
+          // 각 택시의 출발지와 목적지 설정
+          var startPosition = new kakao.maps.LatLng(location.s_lat, location.s_long);
+          var endPosition = new kakao.maps.LatLng(location.d_lat, location.d_long);
+
+          // 혼잡도에 따른 이동 속도 설정 (cong_grade에 따라 속도를 다르게 설정)
+          function getSpeed(cong_grade) {
+            switch (cong_grade) {
+              case "0": return 50;    // 매우 빠른 속도
+              case "1": return 300;   // 빠른 속도
+              case "2": return 900;   // 보통 속도
+              case "3": return 1500;  // 느린 속도
+              default: return 1000;   // 기본 속도
+            }
+          }
+
+          // 택시 마커 생성
+          var marker = new kakao.maps.Marker({
+            position: startPosition,
+            map: map,
+            image: new kakao.maps.MarkerImage(
+              'https://img.icons8.com/emoji/48/000000/taxi-emoji.png',
+              new kakao.maps.Size(40, 40)
+            )
+          });
+
+          // 도착지와의 거리 계산 함수 (거리 오차 허용범위 설정)
+          function isNearDestination(current, destination, threshold = 0.0001) {
+            const latDiff = Math.abs(current.getLat() - destination.getLat());
+            const lngDiff = Math.abs(current.getLng() - destination.getLng());
+            return latDiff < threshold && lngDiff < threshold;
+          }
+
+          // 이동 함수 정의
+          function moveTaxi(marker, start, end, speed) {
+            var deltaLat = (end.getLat() - start.getLat()) / 100;
+            var deltaLng = (end.getLng() - start.getLng()) / 100;
+            var currentLat = start.getLat();
+            var currentLng = start.getLng();
+
+            function animate() {
+              // 현재 위치에서 다음 위치로 업데이트
+              currentLat += deltaLat;
+              currentLng += deltaLng;
+              var nextPosition = new kakao.maps.LatLng(currentLat, currentLng);
+              marker.setPosition(nextPosition);
+
+              // 도착지에 도달했는지 확인하고 왕복 처리
+              if (isNearDestination(nextPosition, end)) {
+                [start, end] = [end, start]; // 방향 전환
+                deltaLat = (end.getLat() - start.getLat()) / 100;
+                deltaLng = (end.getLng() - start.getLng()) / 100;
+                speed = getSpeed(location.cong_grade); // 반대 방향 속도 설정
+                currentLat = start.getLat(); // 시작 위치를 현재 위치로 초기화
+                currentLng = start.getLng();
+              }
+              setTimeout(animate, speed);
+            }
+            animate();
+          }
+
+          // 택시 이동 시작
+          moveTaxi(marker, startPosition, endPosition, getSpeed(location.cong_grade));
+        });
+      })
+      .catch(error => console.error('Error fetching taxi locations:', error));
+  </script>
+</body>
+</html>

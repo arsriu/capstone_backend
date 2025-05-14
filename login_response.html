@@ -1,0 +1,752 @@
+
+
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Titillium+Web:400,600,700' rel='stylesheet' type='text/css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+<meta name="author" content="안양대학교 " />
+<meta name="description" content="안양대학교 입니다." />
+<meta name="keywords" content="안양대학교 " />
+
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/reset.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/button.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/board.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/jquery.skippr.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/bellows-theme.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/jqpagination.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/toggle-switch.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/common.css"/>
+<link rel="stylesheet" type="text/css" href="/lmsdata/css/m/main.css"/>
+
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/jquery-1.11.1.min.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/jquery-ui.min.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/common.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/slidebars.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/modernizr.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/jquery.skippr.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/velocity.min.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/bellows.min.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/jquery.jqpagination.js"></script>
+<script type="text/JavaScript" language="JavaScript" src="/lmsdata/js/m/swipe.js"></script>
+<script>
+		(function($) {
+			$(document).ready(function() {
+				$.slidebars({
+					disableOver:false,
+					hideControlClasses: true
+				});
+			});
+		}) (jQuery);
+	</script>
+
+<title></title>
+
+
+<script language="javascript">
+
+
+function addLoadEvent(func){
+    var oldonload = window.onload;
+    if(typeof window.onload != 'function'){
+        window.onload = func;
+    }else{
+        window.onload = function(){
+            oldonload();
+            func();
+        };
+    }
+
+}
+
+addLoadEvent(hideURLbar);
+
+//주소창 자동 닫힘 
+/* 
+if (navigator.userAgent.indexOf('iPhone')!=-1)
+  {
+   addEventListener("load",function()
+    {
+    setTimeout(hideURLbar,0);
+    },false);
+  }
+   */
+// 위에껀 아이폰
+// 요 아래껀 다른폰
+function hideURLbar(){
+	if (window.pageYOffset==0) {
+		window.scrollTo(0, 1);
+		// repeat every second for slow rendering pages
+		setTimeout(function() { hideUrlBar(); }, 3000);
+	  
+	}
+}
+</script>
+
+</head>
+<body>	
+	
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+	var commonResultMessage = "null";
+	if(commonResultMessage=="" || commonResultMessage=="null") {
+		commonResultMessage = "null";
+	}
+	var localeKey = "ko";
+</script>
+ 
+
+
+
+<script type="text/javascript">
+function saveLogin(){
+	var f = document.getElementById("loginForm");
+	
+	if(document.getElementById("userDTO.userId").value == "")	{
+		alert("ID를 입력하세요"); 
+		return false;
+	}
+	if(document.getElementById("userDTO.password").value == "")	{
+		alert("비밀번호를 입력하세요"); 
+		return false;
+	}
+	
+	f.submit();
+}
+
+function moveContentsList(courseId,formName,boardInfoGubun,infoId,cmdName,actionName,userType){
+	var url ="";	
+	var infoIdString = "";
+	if(actionName=="Etest"  ){
+		url = "/MEtest.do?";
+		url += "cmd="+cmdName;
+		infoIdString = "&etestInfoDTO.etestInfoId=" + infoId;
+		
+	}else 	if(actionName=="Forum"  ){
+		url = "/MForum.do?";
+		url += "cmd="+cmdName;
+		infoIdString = "&forumInfoDTO.forumInfoId=" + infoId;
+		
+	}else 	if(actionName=="Report"  ){
+		url = "/MReport.do?";
+		url += "cmd="+cmdName;
+		infoIdString = "&reportInfoDTO.reportInfoId=" + infoId;
+		
+	}else 	if(actionName=="Lesson"  ){
+		iurl += "/MCourse.do?";
+		url += "cmd=viewOpenStudyHome";
+		
+		
+	}else 	if(actionName=="Research"  ){
+		url = "/MResearch.do?";
+		url += "cmd="+cmdName;
+		infoIdString = "&researchInfoDTO.researchInfoId=" + infoId;
+	}
+	
+	url+=  "&courseDTO.courseId="+courseId+
+	   "&boardInfoDTO.boardInfoGubun="+boardInfoGubun+
+	   "&boardGubun=study_course"+
+	   "&appGubun=app"+
+	   "&gubun=todayList"+
+	   infoIdString ;
+		 //  "&mainDTO.parentMenuId="+parentMenuId;
+	location.href= url;
+}
+
+function viewCourse(courseIdNownerName){
+	var courseId = courseIdNownerName.split(",")[0];
+	var courseOwnerName = courseIdNownerName.split(",")[1].trim();
+	var openType = courseIdNownerName.split(",")[2].trim();
+	
+	if(courseId!="" && courseOwnerName != ""){
+		
+		if(openType!=="open"){
+			location.href="/MCourse.do?"+
+					 "cmd=viewStudyHome"+
+					 "&courseDTO.courseId="+courseId+
+					 "&boardInfoDTO.boardInfoGubun=study_home&boardGubun=study_course&gubun=study_course";
+		}else{
+			location.href="/MCourse.do?"+
+					 "cmd=viewOpenStudyHome"+
+					 "&courseDTO.courseId="+courseId+
+					 "&boardInfoDTO.boardInfoGubun=study_home&boardGubun=study_course&gubun=study_course";
+		}
+		
+	}else{
+		if(courseId =="") {
+			alert("강의실을 선택하여 주세요");
+		} else {
+			alert("해당 과목의 책임교수가 지정되지 않았습니다.");
+		}
+		return;
+	}
+	
+}
+/* 
+function viewCourse(courseId){
+	location.href="/MCourse.do?"+
+			 "cmd=viewStudyHome"+
+			 "&courseDTO.courseId="+courseId+
+			 "&boardInfoDTO.boardInfoGubun=study_home&boardGubun=study_course";
+	
+}
+ */
+function goMenu(url){
+//	alert("url :"+url);
+	location.href = url;
+}
+</script>
+
+	
+		<header>
+			<h1><a href="/MMain.do?cmd=viewIndexPage" id="cd-logo"><img src="../lmsdata/m_img/logo.png" alt="안양대학교  LMS6.0" /></a></h1>
+				<span class="sb-toggle-left" href="#0">메뉴</span>
+				<span class="sb-toggle-right" href="#0">오늘의 할일</span>
+		</header>
+	
+	<nav class="sb-slidebar sb-left sb-style-push">
+		<div class="class_sbox">	
+				<fieldset>
+					<legend>내강의실로 이동</legend>
+
+					 <select name="courseDTO.courseId" class="default"  onchange="javascript:viewCourse(this.value)" title="내강의실 목록"> 
+ <option value = ''   > 강의실 선택</option> 
+ <option value = '20241NS50270231900400,조성윤,normal' > JAVA프로그래밍I_02</option> 
+ <option value = '20241C100070130800200,이병환,normal' > [IP]나도지식재산권리자Ⅰ_01</option> 
+ <option value = '20241C100040130800200,구웅모,normal' > [스타트업]창업아이디어창출하기_01</option> 
+ <option value = '20241NS70160237100104,장석우,normal' > 딥러닝심화_02</option> 
+ <option value = '20241B800110130800200,박은화,normal' > 자기설계Thinking DESIGN:two-word verbs 알고문장을알자_01</option> 
+ <option value = '20241NS70170237100104,김정준,normal' > 캡스톤디자인Ⅰ_02</option> 
+ <option value = '20241NS10080131900400,장석우,normal' > 프로그래밍입문_01</option> 
+ <option value = 'CORS_24042416035225ba0962,김혜경,bnormal' > 폭력예방교육(재학생)_ </option> 
+ </select> 
+
+				</fieldset>
+		</div>
+		
+		
+		
+	
+			<p class="mt50 tc fcWhite">강의를 선택해주세요</p>
+
+
+		<!-- 스마트 출석 -->
+		
+			<div style="margin-top:40px;padding:15px">
+				<p><a class="btn btn-blue wmax" href="https://cyber.anyang.ac.kr/MSmartatt.do?cmd=addAttendStateForm">스마트출석(안양)</a></p>
+				<br>
+				<p><a class="btn btn-blue wmax" href="https://cyber.anyang.ac.kr/MSmartatt.do?cmd=addAttendStateGhForm">스마트출석(강화)</a></p>
+			</div>
+						
+	</nav>
+
+
+	<aside class="sb-slidebar sb-right sb-style-push">
+		<div class="login_info">
+			<p>
+			
+			
+					<a href="javascript:editProfile();"></a><img src="/lmsdata/img/common/no_user.gif" alt="사진"  style="width:44px ; height:44px"  border="0" >
+			
+		
+				</p>
+			<ul>
+
+				<li><i class="icon-envelope-alt mr5"></i>쪽지<a href="/MMessage.do?cmd=viewMessageList&messageType=RECEIVE"><span class="num bcSkyblue">0</span></a></li>				
+				<li>김영민 (2021E7370)</li>
+			</ul>
+			
+			<p class="logout"><a href="/MUser.do?cmd=logoutUser" class="btn btn-blue wmax">LOGOUT</a></p>
+		</div>
+		
+		 <div id="todayList">											
+ 	<h2>TODAY LIST</h2>                                                                                     
+ 	<div class="listBox">                                                                                   
+ 	</div>                                                                                                  
+ </div>                                                                                                     
+
+	</aside>
+
+
+	<div id="dialog-confirm" class="popupLayer" style="display:none" title="로그인 ">
+		<div class="content">
+		<form name="userForm" id="loginForm" method="post" action="/MUser.do" onsubmit="return saveLogin();">
+			<input type="hidden" name="cmd" value="loginUser" />
+			<input type="text" class="id" name="userDTO.userId" id="userDTO.userId" placeholder="로그인" value="">
+			<input type="password" class="pw" name="userDTO.password" id="userDTO.password" placeholder="비밀번호" value="">
+			<input type="hidden"  name="userDTO.localeKey" id="userDTO.localeKey" value="ko">	
+			<a class="login_btn" onclick="saveLogin();"> 로그인</a>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript">
+
+function noImage(obj){
+	var id = obj.id;
+	
+	var userType= "learner";
+	if(userType=="learner"){
+		$("#" + id).attr("src", "../lmsdata/img/common/no_user.gif");
+	}else{
+		$("#" + id).attr("src", "../lmsdata/img/common/no_professor.gif");
+	}
+}
+$(function() {
+	$( "#dialog-confirm" ).dialog({
+		resizable: false,
+		autoOpen: false,
+		width:'300',
+		height:'auto',
+		modal: true,
+	});
+	$( "#login_popup" ).click(function() {
+		$("#dialog-confirm").dialog( "open" );
+	});
+});
+</script>
+	
+
+<main class="cd-main-content">
+<!-- 		<div class="tagline"> -->
+<!-- 			<p>미래의 더 나은 교육을 위해</p> -->
+<!-- 			<h2>안양대학교 <br /><span>LMS6.0</span>이 함께합니다.</h2> -->
+<!-- 		</div> -->
+		<div id="theTarget">
+			<div style="background-image: url(/lmsdata/m_img/main_visual01.jpg)"></div>
+			<div style="background-image: url(/lmsdata/m_img/main_visual02.jpg)"></div>
+			<div style="background-image: url(/lmsdata/m_img/main_visual03.jpg)"></div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#theTarget").skippr({
+				transition: 'fade',
+				speed: 1000,
+				easing: 'easeOutQuart',
+				navType: 'block',
+				childrenElementType: 'div',
+				arrows: false,
+				autoPlay: true,
+				autoPlayDuration: 5000,
+				keyboardOnAlways: true,
+				hidePrevious: false
+			});
+		});   
+		</script>
+		
+	
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+	var commonResultMessage = "null";
+	if(commonResultMessage=="" || commonResultMessage=="null") {
+		commonResultMessage = "null";
+	}
+	var localeKey = "ko";
+</script>
+ 
+
+<head>
+<script type="text/javascript">
+function viewBoardContents(boardInfoId,boardContentsId){
+
+	var f = document.mainForm;
+	if(f.userType.value!="guest" && f.userType.value!=""){
+		f.action = "/MBoard.do";
+		f["boardInfoDTO.boardInfoId"].value = boardInfoId;
+		f['boardContentsDTO.boardContentsId'].value = boardContentsId;
+		f["cmd"].value    = "viewBoardContents";
+		f["gubun"].value  = "V";
+		f.submit();
+	}else{
+		alert("로그인 해 주세요");
+		return;
+	}
+	 
+}
+
+</script>
+</head>
+<form name="mainForm" method="post" action="/MMain.do">
+<input type="hidden" name="cmd" />
+<input type="hidden" name="gubun" />
+<input type="hidden" name="boardContentsDTO.boardContentsId" value="">
+<input type="hidden" name="boardInfoDTO.boardInfoId" value="">
+<input type="hidden" name="userType"  value="learner"/>
+<main class="cd-main-content">
+<div class="bellows">
+	<!-- The Accordion Items -->
+	
+	
+		
+		
+			<div class="bellows__item">
+				
+				
+				<div class="bellows__header">
+					<h3>공지사항  <!-- <span class="circle bcDarkblue"></span>   --></h3>
+				</div>
+				
+				
+				<div class="bellows__content">
+					<ul>
+						
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_NOTICE','BOAD_230601085521608c41eb');">
+								<span style="width:70%;">사이버강의실 일시 중단 안내</span>
+								<span class="date">2023-06-01</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_NOTICE','BOAD_2305171553163e5e0561');">
+								<span style="width:70%;">강의 영상 용량 줄이는 방법 (영상 인코딩-곰믹스 활용)</span>
+								<span class="date">2023-05-17</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_NOTICE','BOAD_22062014070952af6ab3');">
+								<span style="width:70%;">2022년 원격교육 확대 프로그램 공모(신청) 안내</span>
+								<span class="date">2022-06-20</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_NOTICE','BOAD_22042715281909cb2620');">
+								<span style="width:70%;">안양대학교 K-MOOC.KOCW 공개강좌 리스트 안내</span>
+								<span class="date">2022-04-27</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_NOTICE','BOAD_22022514465624830211');">
+								<span style="width:70%;">2022년 한국형 온라인 공개강좌(K-MOOC) 개발 공모-개별강좌 안내</span>
+								<span class="date">2022-02-25</span>
+								</a>
+							</li>
+							
+						
+						
+						
+					</ul>
+				</div>
+				
+			
+			</div>
+		
+		
+			<div class="bellows__item">
+				
+				
+				<div class="bellows__header">
+					<h3>질의응답  <!-- <span class="circle bcDarkblue"></span>   --></h3>
+				</div>
+				
+				
+				<div class="bellows__content">
+					<ul>
+						
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_QNA','BOAD_240326152415ef0d62d6');">
+								<span style="width:70%;">아리진로탐색과대생활 온라인 수업을 다 듣고 작성 후기도 남겼는데 결석 처리가 되어 있습니다.</span>
+								<span class="date">2024-03-26</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_QNA','BOAD_2403251716330f563a3c');">
+								<span style="width:70%;">배너 삭제 요청의 건 : 도시정보공학과 정수민(2021H1128)</span>
+								<span class="date">2024-03-25</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_QNA','BOAD_2403192230586e42678e');">
+								<span style="width:70%;">신화이야기 51 강의 오류</span>
+								<span class="date">2024-03-19</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_QNA','BOAD_24031820265415463e0b');">
+								<span style="width:70%;">출석 오류</span>
+								<span class="date">2024-03-18</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+						
+						
+							<li><a href="javascript:viewBoardContents('BOAD_SYSTEM_QNA','BOAD_2403121444112d1331fd');">
+								<span style="width:70%;">강의자료실 수업자료 첨부파일 다운로드가 안됩니다.</span>
+								<span class="date">2024-03-12</span>
+								</a>
+							</li>
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+							
+							
+							
+						
+							
+						
+						
+						
+					</ul>
+				</div>
+				
+			
+			</div>
+		
+		
+			<div class="bellows__item">
+				
+				
+				<div class="bellows__header">
+					<h3>FAQ  <!-- <span class="circle bcDarkblue"></span>   --></h3>
+				</div>
+				
+				
+				<div class="bellows__content">
+					<ul class="faq_latest">
+					
+					
+						
+					
+						<li><a href="#" class="title">출석 안내 --> '오프라인 출석 안내'로 정정 합니다</a>
+							<div class="comment"><p>출석 기준(오프라인) 안내 입니다.</p><p><br></p><p>1. 기준 시간 출석 동그라미</p><p>2. 기준 시간 미출석 엑스</p><p>3. 기준 시간 지각 세모</p><p><br></p><p><span style="color: rgb(255, 0, 0);"><u>* 온라인 출석은 지각이 없습니다.</u></span></p><p>&nbsp;&nbsp; 학습기간 내에 학습을 완료 하지 못하거나, 기간을 초과하여 완료 한 경우 </p><p>&nbsp;&nbsp; 두가지 경우 모두 결석으로 처리되오니 유의 바랍니다. (학교 방침)<br></p></div>
+						</li>
+					
+						
+					
+						<li><a href="#" class="title">동영상 재생에 대한 대처 방법</a>
+							<div class="comment"><p>안녕하세요. </p><p><br></p><p>동영상 재생에 대한 대처 방법 안내드립니다.</p><p><br></p><p>동영상 재생이 안되는 경우 익스플로러 초기화를 진행해 주시기 바랍니다.<br></p></div>
+						</li>
+					
+						
+					
+						<li><a href="#" class="title">Internet Explorer 업그레이드</a>
+							<div class="comment"><p style="font-size: 13.3333px;">eClass 시스템에서는 다양한 브라우저를 지원하고 있으나 타 브라우저와의 호환성 문제로&nbsp;</p><p style="font-size: 13.3333px;">MS의 지원이 종료된 Internet Explorer 에 대해서는 완벽한 지원이 힘듭니다.</p><p style="font-size: 13.3333px;">업데이트 된 브라우저를 사용해 주시길 권장합니다.</p><p style="font-size: 13.3333px;"><b>eClass 시스템 사용 시에 문제가 있으실 경우 브라우저 업데이트로 문제가 해결될 수 있습니다.</b></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><span style="font-size: 10pt;">윈도우즈 8, 윈도우즈 8.1, 윈도우즈 10 을 사용하실 경우는 이미 Internet Explorer 11 버전이 설치되어 있으니</span></p><p style="font-size: 13.3333px;"><span style="font-size: 10pt;">아래의 작업이 필요하지 않습니다. 이 경우 eClass 시스템 사용에 문제가 있으시다면 은행 업무 및 사이트 이용 시</span></p><p style="font-size: 13.3333px;"><span style="font-size: 10pt;">설치된 액티브 X 프로그램이 문제를 일으킬 수 있으니 Chrome 브라우저로&nbsp;eClass 시스템을 이용해</span></p><p style="font-size: 13.3333px;"><span style="font-size: 10pt;">문제가 일어나지 않는지 확인해 보시기 바랍니다.&nbsp;</span></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">Windows 7 버전을 사용하실 경우 아래의 링크를 클릭해 주십시오</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><span style="font-size: 13.3333px;"><a href="https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads" target="_blank" class="tx-link">https://support.microsoft.com/ko-kr/help/17621/internet-explorer-downloads</a></span><br></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_1703141923189470013a.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">사용하고 계신 윈도우 제품 버전을 선택해주시면 아래와 같이 다운로드 버튼이 나타납니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_1703141924319470013c.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><span style="font-size: 13.3333px;">사용하고 계신 윈도우즈에 맞는 Internet Explorer 을 다운로드 합니다.</span></p><p style="font-size: 13.3333px;"><span style="font-size: 13.3333px;"><br></span></p><p style="font-size: 13.3333px;"><span style="font-size: 13.3333px;">다운로드 하신 파일을 더블 클릭하면 설치가 시작됩니다.</span></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">설치가 완료되면 시스템을 다시 시작해야 하니 재시작하시기 전에 이용하고 계시던 프로그램을 정상 종료 해주십시오.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><b>참고: 윈도우즈 비트 확인법</b></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">1. 좌측 하단 윈도우 시작 버튼을 선택해주세요. 시작 버튼을 클릭하여 메뉴가 열리면, 우측 중간아래 `제어판`이라는 항목을 선택합니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_1703141925089470013e.png" class="txc-image" style="clear: none; float: none;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">2. 제어판 항목이 열리면 우측상단 아래 `보기 기준` 이라는 항목을 확인 하실수 있습니다. 여기서 보기기준을 큰 아이콘(L) 및 작은 아이콘(S)을 선택합니다. `큰 아이콘(L)`을 권장합니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_17031419252194700140.png" class="txc-image" style="clear: none; float: none;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">3. 제어판 항목에서 `시스템`이라는 항목을 선택합니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_17031419253394700142.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><span style="font-size: 10pt;">4. 시스템 항목이 열리면 'windows 버전` 및 `시스템 종류`를 확인 하실수 있습니다. 시스템 종류라는 항목에 보이는 `XX비트 운영 체제`가 현재 사용중인 윈도우 운영체제 비트입니다.</span></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_17031419254794700144.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><div><br></div></div>
+						</li>
+					
+						
+					
+						<li><a href="#" class="title">Chrome 브라우저 설치하기</a>
+							<div class="comment"><p style="font-size: 13.3333px;"><b>eClass 시스템 사용 시에 문제가 있으실 경우 크롬 브라우저를 통해 문제가 해결될 수 있습니다.</b></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">인터넷 브라우저의 주소창에&nbsp;<a href="https://www.google.co.kr/chrome/browser/desktop/" target="_blank" class="tx-link">https://www.google.co.kr/chrome/browser/desktop/</a>&nbsp;를 입력하시거나 링크를 클릭해 주십시오.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_17031419272994700146.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">화면 가운데의 파란색 버튼을 클릭하시면 크롬 브라우저의 다운로드가 시작됩니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_17031419280994700148.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px; text-align: center;"><br></p><p style="font-size: 13.3333px;">위와 같은 창이 뜨면 좌측 하단의 "동의 및 설치" 버튼을 클릭해 주십시오.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_1703141928419470014a.png" class="txc-image" width="600" style="clear: none; float: none; width: 600px;"></p><p style="font-size: 13.3333px; text-align: center;"><br></p><p style="font-size: 13.3333px;">다운로드 창이 뜨면 저장 위치를 지정해 주십시오.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">다운로드 하신 "ChromeSetup.exe" 파일을 더블 클릭 하시면 설치가 시작됩니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;">설치가 완료되면 바탕화면에서 아래와 같은 아이콘을 찾아 클릭하시면 크롬 브라우저가 시작됩니다.</p><p style="font-size: 13.3333px;"><br></p><p style="font-size: 13.3333px;"><img src="http://ctl.edutrack.co.kr/lmsdata/business/faq//COMF_1703141929109470014c.png" class="txc-image" style="clear: none; float: none;"></p><div><br></div><p style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: 나눔고딕; font-size: 13.3333px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-align: center;"></p></div>
+						</li>
+					
+						
+					
+						<li><a href="#" class="title">동영상이 나오지 않을 경우 컴퓨터 설정</a>
+							<div class="comment"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr class="odd-row"><td class="first last" style="padding: 0px 0px 5px 16px;">** 컴퓨터 환경이 맞지 않을 수 있으니 아래처럼 변경해 주시면 감사하겠습니다.<br>&nbsp;<br><img width="14" height="14" style="margin-bottom: -2px;" src="http://eln.gwnu.ac.kr/lmsdata/template1/help/guide/guide03.gif" border="0"> &nbsp; <span class="title2">기본값 복원</span> <br></td></tr><tr><td class="first last" style="padding: 0px 16px;">[도구] =&gt; [인터넷옵션] =&gt; [고급]탭을 선택한 후 [기본값 복원] 버튼을 클릭한 다음 <br>[기본값 복원] 버튼을 클릭하고 [확인] 버튼을 클릭합니다. <br>익스플로러 창을 닫은 다음 사이버 캠퍼스로 다시 접속합니다. <br><br><img alt="" src="http://eln.gwnu.ac.kr/lmsdata/template1/help/guide/guide_02_img04.gif" border="0"> <br><br></td></tr><tr class="odd-row"><td class="first last" style="padding: 0px 0px 5px 16px;"><img width="14" height="14" style="margin-bottom: -2px;" src="http://eln.gwnu.ac.kr/lmsdata/template1/help/guide/guide03.gif" border="0"> &nbsp; <span class="title2">보안설정</span> </td></tr><tr><td class="first last" style="padding: 0px 16px;">[도구] =&gt; [인터넷옵션] =&gt; [보안]탭을 선택한 후 상단에 있는 <br>[보안 설정을 지정할 웹 컨텐트 영역을 선택하십시오] 영역에서 [신뢰할 수 있는 사이트]를 선택합니다. <br>해당 페이지 하단 부분에 [이 영역에 적용할 보안 수준]에서 [기본 수준]을 선택한 후 <br>페이지 제일 아래 [적용] 버튼을 클릭합니다. <br><br><img alt="" src="http://eln.gwnu.ac.kr/lmsdata/template1/help/guide/guide_02_img02.gif" border="0"> </td></tr></tbody></table><p><img src="data:image/png;base64,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" alt=""><br></p><p>크롬일 경우 Flash 기본값이 차단되어 있기 때문에 허용으로 변경해주셔야 합니다.</p><p><br></p></div>
+						</li>
+					
+					
+					
+					</ul>
+				</div>
+				
+			
+			</div>
+		
+	
+	
+	
+	
+	
+	
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.bellows').bellows({
+		singleItemOpen: true,
+		duration: 200,
+		easing: 'swing',
+		open: function(e, ui) {},
+		opened: function(e, ui) {},
+		close: function(e, ui) {},
+		closed: function(e, ui) {}
+	});
+	/* FAQ toggleClass */
+	/*$('.title').click(function(){
+		$(this).siblings(".comment").toggleClass('hidden');
+	});*/
+	$('.comment').hide();
+	$('.title').on('click', function (e) {
+		e.preventDefault();
+		var elem = $(this).next('.comment')
+		$('.comment').not(elem).hide();
+		elem.toggle();
+	});
+});   
+</script> 
+</form>
+	
+
+
+
+
+<footer>
+
+
+<a href="http://cyber.anyang.ac.kr:80/Main.do?cmd=viewHome&userDTO.localeKey=ko"    class="device">PC화면으로 보기</a>
+
+
+	<p class="copyright">Copyrights ANYANG UNIVERSITY. All rights reserved.
+
+	
+<!-- 		<span class="lang_en"><a href="/MMain.do?cmd=viewIndexPage&userDTO.localeKey=en">영어</a></span> -->
+		
+
+	<!--
+	<span class="lang_cn"><a href="#">중국어</a></span>
+	<span class="lang_jp"><a href="#">일본어</a></span>
+	 -->
+	</p>
+	<a title="컨텐츠 상단으로 이동" class="" id="toTop" style="display:none;" href="#"></a>
+</footer>
+
+
+</main>
+</body>
+</html>
+
