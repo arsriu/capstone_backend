@@ -28,7 +28,7 @@ def taxi_location_json(request):
 
                 if link_id:  # link_id 값이 있는 경우에만 추가
                     # API 호출 URL 구성
-                    api_url = f'https://openapigits.gg.go.kr/api/rest/getRoadLinkTrafficInfo?serviceKey=24d1e68eea50d5715d7cb081eb113f1acb5d8939&linkId={link_id}'
+                    api_url = f'https://openapigits.gg.go.kr/api/rest/getRoadLinkTrafficInfo?serviceKey=???linkId={link_id}'
                     cong_grade_value = "N/A"  # 기본값 설정
 
                     try:
